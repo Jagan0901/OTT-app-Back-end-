@@ -1,10 +1,15 @@
+import cors from "cors";
 import * as dotenv from 'dotenv';
 import express from "express";
 import { MongoClient } from "mongodb";
-
+import { movieRouter } from './routes/movies.js';
+import { showRouter } from './routes/shows.js';
+import { usersRouter } from './routes/users.js';
 dotenv.config();
 
 const app     = express();
+
+app.use(cors()); 
 
 // console.log(process.env.MONGO_URL);
 const PORT = process.env.PORT;
@@ -547,78 +552,28 @@ async function createConnection(){
   return client;
 }
 
-const client = await createConnection();
+export const client = await createConnection();
 //interceptor || converting body to json
 app.use(express.json());
 
 
  
 app.get("/", (req,res) => {
-    res.send("Always and Forever")
+    res.send(`Enter  /TVShows or  /Movies to get the particular data`)
 });
 
+app.use("/Movies", movieRouter);
+app.use("/TVShows", showRouter);
+app.use("/users", usersRouter);
 
-//POST method
-app.post("/movies", async(req,res) => {
-  const newMovie = req.body;
-  console.log(newMovie);
-  const create = await client
-  .db("OTT-app")
-  .collection("movies")
-  .insertMany(newMovie);
-  res.send(create)
-});
-
-
-//Movies
-// app.get("/Movies", (req, res) => {
-//     res.send(movies);
-// });
-
-
-// Movies/id
-app.get("/Movies/:movieId", async (req,res) => {
-  const {movieId} = req.params;
-  const movie = await client.db("OTT-app").collection("movies").findOne({id: +movieId });
-  // const movie = movies.find((mv) => mv.id == movieId)
-  movie ? res.send(movie) : res.status(404).send({message: "No Movie Found"}); 
-});
-
-
-
-app.delete("/books/:bookId", async (req,res) => {
-  const {bookId} = req.params;
-  const book = await client.db("OTT-app").collection("books").deleteOne({id: +bookId });
-  // const movie = movies.find((mv) => mv.id == movieId)
-  res.send(book); 
-})
-  
-
-
-//to get language,rating
-app.get("/Movies", async (req,res) => {
-  const {language,rating} = req.query;
-  // let filteredMovies = movies;
-  // // const movie = movies.filter((mv) => mv.language == language);
-  // console.log(req.query);
-  
-  // if(language){
-  //   filteredMovies = filteredMovies.filter((mv) => mv.language == language)
-  // }
-  // if(rating){
-  //   filteredMovies = filteredMovies.filter((mv) => mv.rating == rating)
-  // }
-  if(req.query.rating){
-    req.query.rating = +req.query.rating
-  }
-  const movie = await client
-   .db("OTT-app")
-   .collection("movies")
-   .find(req.query)
-   .toArray();
-  res.send(movie);
-})
 
 
 
 app.listen(PORT, () => console.log("Server started on the PORT", PORT));
+
+
+
+
+
+
+
