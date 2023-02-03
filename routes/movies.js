@@ -5,7 +5,7 @@ import { auth } from "../middleWare/auth.js";
 const router = express.Router();
 
 //POST method
-router.post("/add", async(req,res) => {
+router.post("/", async(req,res) => {
   const newMovie = req.body;
   console.log(newMovie);
   const create = await addMovies(newMovie);
