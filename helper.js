@@ -14,7 +14,7 @@ export async function addMovies(newMovie) {
   return await client
     .db("OTT-app")
     .collection("movies")
-    .insertMany(newMovie);
+    .insertOne(newMovie);
 }
 
 export async function getMoviesById(movieId) {
@@ -56,7 +56,7 @@ export async function addShows(newShow) {
   return await client
     .db("OTT-app")
     .collection("shows")
-    .insertMany(newShow);
+    .insertOne(newShow);
 }
 
 export async function getShowsById(showId) {
