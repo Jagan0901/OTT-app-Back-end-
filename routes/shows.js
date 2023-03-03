@@ -15,7 +15,7 @@ router.post("/",auth, async(req,res) => {
 
 
 // Movies/id
-router.get("/:showId",auth, async (req,res) => {
+router.get("/:showId", async (req,res) => {
   const {showId} = req.params;
   const show = await getShowsById(showId);
   // const movie = movies.find((mv) => mv.id == movieId)
