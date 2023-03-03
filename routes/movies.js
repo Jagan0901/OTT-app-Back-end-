@@ -5,7 +5,7 @@ import { auth } from "../middleWare/auth.js";
 const router = express.Router();
 
 //POST method
-router.post("/", async(req,res) => {
+router.post("/",auth, async(req,res) => {
   const newMovie = req.body;
   console.log(newMovie);
   const create = await addMovies(newMovie);
@@ -24,7 +24,7 @@ router.get("/:movieId",auth, async (req,res) => {
 
 
 //Delete Book
-router.delete("/:movieId", async (req,res) => {
+router.delete("/:movieId",auth, async (req,res) => {
   const {movieId} = req.params;
   const movie = await deleteMoviesbyId(movieId);
   // const movie = movies.find((mv) => mv.id == movieId)
