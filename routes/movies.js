@@ -32,7 +32,7 @@ router.delete("/:movieId", async (req,res) => {
 })
 
 //Update movie
-router.put("/:movieId", async(req,res) => {
+router.put("/:movieId",auth, async(req,res) => {
   const {movieId} = req.params;
   const updatedMovie = req.body;
   // console.log(newMovie);
