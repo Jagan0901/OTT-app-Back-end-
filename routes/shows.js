@@ -15,7 +15,7 @@ router.post("/", async(req,res) => {
 
 
 // Movies/id
-router.get("/:showId", async (req,res) => {
+router.get("/:showId",auth, async (req,res) => {
   const {showId} = req.params;
   const show = await getShowsById(showId);
   // const movie = movies.find((mv) => mv.id == movieId)
@@ -32,7 +32,7 @@ router.delete("/:showId", async (req,res) => {
 })
 
 //Update movie
-router.put("/:showId", async(req,res) => {
+router.put("/:showId",auth, async(req,res) => {
   const {showId} = req.params;
   const updatedShow = req.body;
   // console.log(newMovie);
@@ -43,7 +43,7 @@ router.put("/:showId", async(req,res) => {
 
 
 //to get language,rating
-router.get("/",  async (req,res) => {
+router.get("/",auth,  async (req,res) => {
   const {language,rating} = req.query;
   // let filteredMovies = movies;
   // // const movie = movies.filter((mv) => mv.language == language);

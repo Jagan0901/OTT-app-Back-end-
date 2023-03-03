@@ -15,7 +15,7 @@ router.post("/", async(req,res) => {
 
 
 // Movies/id
-router.get("/:movieId", async (req,res) => {
+router.get("/:movieId",auth, async (req,res) => {
   const {movieId} = req.params;
   const movie = await getMoviesById(movieId);
   // const movie = movies.find((mv) => mv.id == movieId)
@@ -43,7 +43,7 @@ router.put("/:movieId",auth, async(req,res) => {
 
 
 //to get language,rating
-router.get("/", async (req,res) => {
+router.get("/",auth, async (req,res) => {
   const {language,rating} = req.query;
   // let filteredMovies = movies;
   // // const movie = movies.filter((mv) => mv.language == language);
